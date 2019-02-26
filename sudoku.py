@@ -1,96 +1,3 @@
-#################################################
-# Hw5
-# Your andrewID: yichinle
-# Your section: Q
-#################################################
-
-#################################################
-# Hw5 problems
-#################################################
-
-#### #1: COLLABORATIVE: removeRowAndCol ####
-#Collaborators: (yixiaofu) 
-import copy
-#from class note
-def myDeepCopy(a):
-    if (isinstance(a, list) or isinstance(a, tuple)):
-        return [myDeepCopy(element) for element in a]
-    else:
-        return copy.copy(a)
-        
-#loop thorugh rows to delete col
-#create a newList to edit         
-def nondestructiveRemoveRowAndCol(lst, row, col):
-    newList = myDeepCopy(lst)
-    del newList[row]
-    for i in range(len(lst)-1):
-        del newList[i][col]
-    return newList
-    
-#directly edit on the lst
-def destructiveRemoveRowAndCol(lst, row, col):
-    del(lst[row])
-    for i in range (len(lst)):
-        del(lst[i][col])
-    
-#### #2: COLLABORATIVE: wordSearchWithWildcards(board, word) ####
-#Collaborators: (list andrewIDs)
-####################################
-# customize these functions
-####################################
-# build on Word Search Animation from 09/27/18 Lecture
-# Word Search Solver Algorithm
-import string
-def wordSearchWithWildcards(board, word):
-    for row in range(len(board)):
-        for col in range(len(board[0])):
-            result = wordSearchFromPosition(board, word, row, col)
-            if result != False:
-                return result
-    return False
-
-def wordSearchFromPosition(board, word, row, col):
-    for drow in [-1, 0, 1]:
-        for dcol in [-1, 0, 1]:
-            if drow == dcol == 0:
-                continue
-            result = wordSearchFromPositionInDir(board, word, 
-                                                    row, col, drow, dcol)
-            if result != False:
-                return result
-    return False
-#check the char of word in board in the same as word index 
-def wordSearchFromPositionInDir(board, word, row, col, drow, dcol):
-    curRow, curCol = row, col
-    wordIndex = 0
-    while wordIndex < len(word):
-        if curRow < 0 or curRow >= len(board) or \
-            curCol < 0 or curCol >= len(board[row]):
-            return False
-        #the item in board is an interger, skip the word index
-        elif isinstance(board[curRow][curCol],int):
-            num = board[curRow][curCol]
-            if num == len(word)-wordIndex:
-                return True
-            elif num > len(word)-wordIndex:
-                return False
-            #update the current information
-            else:
-                wordIndex += num
-                curRow += drow
-                curCol += dcol
-        elif board[curRow][curCol] != word[wordIndex] :
-            return False
-        else:
-            curRow += drow
-            curCol += dcol
-            wordIndex += 1
-    return True
-
-####################################
-# use the run function as-is
-####################################
-
 #### #3: Sudoku Logic ####
 import math
 def areLegalValues(values):
@@ -529,7 +436,7 @@ def testSokobanAnimation():
     print("Done!")
 
 #################################################
-# Hw5 Main
+#main
 #################################################
 
 def testAll():
